@@ -18,6 +18,10 @@ const options = {
         }
       };
       Object.assign(state.topics, topic);
+    },
+
+    addQuizIds: (state, action) => {
+      state.topics[action.payload.topicId].quizIds.push(action.payload.id);
     }
   }
 };
@@ -28,6 +32,6 @@ export const selectAllTopics = (state) => state.topics.topics;
 
 const { actions, reducer } = topicsSlice;
 
-export const { addTopic } = actions;
+export const { addTopic, addQuizIds } = actions;
 
 export default reducer;
