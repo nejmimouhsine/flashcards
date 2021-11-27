@@ -9,29 +9,24 @@ const options = {
   initialState,
   reducers: {
     addTopic: (state, action) => {
-      const topic = {
-        [action.payload.id]: {
-          id: action.payload.id,
-          name: action.payload.name,
-          icon: action.payload.icon,
-          quizIds: []
-        }
+      const { id, name, icon } = action.payload;
+      state.topics[id] = {
+        id,
+        name,
+        icon,
+        quizIds: []
       };
-      Object.assign(state.topics, topic);
     },
 
     addQuizIds: (state, action) => {
-      state.topics[action.payload.topicId].quizIds.push(action.payload.id);
+      const { topicId, quizId } = action.payload;
+      state.topics[topicId].quizIds.push(quizId);
     }
   }
 };
 
 const topicsSlice = createSlice(options);
 
+export const { addTopic, addQuizIds } = topicsSlice.actions;
 export const selectAllTopics = (state) => state.topics.topics;
-
-const { actions, reducer } = topicsSlice;
-
-export const { addTopic, addQuizIds } = actions;
-
-export default reducer;
+export default topicsSlice.reducer;
